@@ -15,6 +15,7 @@ class _BookslotState extends State<Bookslot> {
         backgroundColor: const Color.fromARGB(255, 89, 64, 255),
         title: const Text("Book Your Slot"),
       ),
+      body: Container(),
     );
   }
 }
