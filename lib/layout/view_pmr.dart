@@ -1,18 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'dart:convert';
 
-class ViewPmr extends StatefulWidget {
-  const ViewPmr({super.key});
+class Viewpmr extends StatefulWidget {
+  const Viewpmr({Key? key}) : super(key: key);
 
   @override
-  State<ViewPmr> createState() => _ViewPmrState();
+  State<Viewpmr> createState() => _ViewpmrState();
 }
 
-class _ViewPmrState extends State<ViewPmr> {
+class _ViewpmrState extends State<Viewpmr> {
   late List data;
   void List_function() async {
-    var url = Uri.parse("");
+    var url = Uri.parse("http://192.168.43.90:8000/pmr/ooo/");
     Response resp1 = await get(url);
     // data = jsonDecode(resp1.body);
     this.setState(() {
@@ -23,10 +23,15 @@ class _ViewPmrState extends State<ViewPmr> {
 
   @override
   Widget build(BuildContext context) {
+    List_function();
     return Scaffold(
+      // drawer: drawuser(),
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
-        title: Text('View PMR'),
+        backgroundColor: Colors.blue,
+        title: Text(
+          "View Product",
+          style: new TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Container(
           decoration: BoxDecoration(
@@ -59,21 +64,83 @@ class _ViewPmrState extends State<ViewPmr> {
                             children: <Widget>[
                               // Image.network(mainpage.url+"static/"+data[index]['pmr'].toString()),
                               new Text(
-                                "Labour Name : " +
+                                "PMR details: " +
                                     " " +
-                                    data[index]['lname'].toString(),
+                                    data[index]['pmr_details'].toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               new SizedBox(height: 6.0),
 
                               new Text(
-                                  ('Rating : ').toUpperCase() +
-                                      " " +
-                                      data[index]['rating'].toString(),
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium),
+                                "Doctor name : " +
+                                    " " +
+                                    data[index]['doctor_id'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
                               new SizedBox(height: 6.0),
-                              //
+
+                              new Text(
+                                "Patient id" +
+                                    " " +
+                                    data[index]['patient_id'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+
+                              new Text(
+                                "Phone : " +
+                                    " " +
+                                    data[index]['phone'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+
+                              new Text(
+                                "prescrptions : " +
+                                    " " +
+                                    data[index]['prescriptions'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+                              new Text(
+                                "Date: " + " " + data[index]['date'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+                              new Text(
+                                "Time : " +
+                                    " " +
+                                    data[index]['time'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+
+                              new Text(
+                                "Gender : " +
+                                    " " +
+                                    data[index]['gender'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+                              new Text(
+                                "Age : " + " " + data[index]['age'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+                              new Text(
+                                "address : " +
+                                    " " +
+                                    data[index]['address'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+                              new Text(
+                                "category: " +
+                                    " " +
+                                    data[index]['category'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
                             ],
                           ),
                         )

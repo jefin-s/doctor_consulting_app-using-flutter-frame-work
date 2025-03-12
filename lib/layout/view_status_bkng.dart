@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart';
+import 'dart:convert';
 
-class ViewStatusBkng extends StatefulWidget {
-  const ViewStatusBkng({super.key});
+class Viewstatus extends StatefulWidget {
+  const Viewstatus({Key? key}) : super(key: key);
 
   @override
-  State<ViewStatusBkng> createState() => _ViewStatusBkngState();
+  State<Viewstatus> createState() => _ViewstatusState();
 }
 
-class _ViewStatusBkngState extends State<ViewStatusBkng> {
+class _ViewstatusState extends State<Viewstatus> {
   late List data;
   void List_function() async {
-    var url = Uri.parse("");
+    var url = Uri.parse("http://127.0.0.1:8000/booking_details/stat/");
     Response resp1 = await get(url);
     // data = jsonDecode(resp1.body);
     this.setState(() {
@@ -23,10 +23,15 @@ class _ViewStatusBkngState extends State<ViewStatusBkng> {
 
   @override
   Widget build(BuildContext context) {
+    List_function();
     return Scaffold(
+      // drawer: drawuser(),
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
-        title: Text('View Status Booking'),
+        backgroundColor: Colors.blue,
+        title: Text(
+          "View Product",
+          style: new TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Container(
           decoration: BoxDecoration(
@@ -59,21 +64,36 @@ class _ViewStatusBkngState extends State<ViewStatusBkng> {
                             children: <Widget>[
                               // Image.network(mainpage.url+"static/"+data[index]['pmr'].toString()),
                               new Text(
-                                "Labour Name : " +
+                                "Booking_time: " +
                                     " " +
-                                    data[index]['lname'].toString(),
+                                    data[index]['booking_time'].toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               new SizedBox(height: 6.0),
 
                               new Text(
-                                  ('Rating : ').toUpperCase() +
-                                      " " +
-                                      data[index]['rating'].toString(),
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium),
+                                "Booking_date : " +
+                                    " " +
+                                    data[index]['booking_date'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
                               new SizedBox(height: 6.0),
-                              //
+
+                              new Text(
+                                "Doctor's name: " +
+                                    " " +
+                                    data[index]['uname'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+
+                              new Text(
+                                "Status: " +
+                                    " " +
+                                    data[index]['status'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
                             ],
                           ),
                         )

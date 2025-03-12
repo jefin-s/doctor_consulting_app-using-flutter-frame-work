@@ -1,18 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'dart:convert';
 
-class ViewNotfication extends StatefulWidget {
-  const ViewNotfication({super.key});
+class Viewnotification extends StatefulWidget {
+  const Viewnotification({Key? key}) : super(key: key);
 
   @override
-  State<ViewNotfication> createState() => _ViewNotficationState();
+  State<Viewnotification> createState() => _ViewnotificationState();
 }
 
-class _ViewNotficationState extends State<ViewNotfication> {
+class _ViewnotificationState extends State<Viewnotification> {
   late List data;
   void List_function() async {
-    var url = Uri.parse("");
+    var url = Uri.parse("http://127.0.0.1:8000//notifications/view_nfn/");
     Response resp1 = await get(url);
     // data = jsonDecode(resp1.body);
     this.setState(() {
@@ -25,9 +25,15 @@ class _ViewNotficationState extends State<ViewNotfication> {
   Widget build(BuildContext context) {
     List_function();
     return Scaffold(
+      // drawer: drawuser(),
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
-        title: Text('View notification'),
+        backgroundColor: Colors.blue,
+        title: Center(
+          child: Text(
+            "View Notification",
+            style: new TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
       body: Container(
           decoration: BoxDecoration(
@@ -60,21 +66,34 @@ class _ViewNotficationState extends State<ViewNotfication> {
                             children: <Widget>[
                               // Image.network(mainpage.url+"static/"+data[index]['pmr'].toString()),
                               new Text(
-                                "Labour Name : " +
+                                "Notification name: " +
                                     " " +
-                                    data[index]['lname'].toString(),
+                                    data[index]['notification_name'].toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               new SizedBox(height: 6.0),
 
                               new Text(
-                                  ('Rating : ').toUpperCase() +
-                                      " " +
-                                      data[index]['rating'].toString(),
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium),
+                                "Date : " +
+                                    " " +
+                                    data[index]['date'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
                               new SizedBox(height: 6.0),
-                              //
+
+                              new Text(
+                                "Time: " + " " + data[index]['time'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
+
+                              new Text(
+                                "Doctor name : " +
+                                    " " +
+                                    data[index]['uname'].toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              new SizedBox(height: 6.0),
                             ],
                           ),
                         )
