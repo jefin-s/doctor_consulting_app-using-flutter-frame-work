@@ -1,3 +1,6 @@
+import 'package:doctor_consulting_app/layout/Login.dart';
+import 'package:doctor_consulting_app/layout/bottomnav.dart';
+import 'package:doctor_consulting_app/layout/pateint_raw.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
@@ -12,8 +15,8 @@ class Viewstatus extends StatefulWidget {
 class _ViewstatusState extends State<Viewstatus> {
   late List data;
   void List_function() async {
-    var url = Uri.parse("http://127.0.0.1:8000/booking_details/stat/");
-    Response resp1 = await get(url);
+    var url = Uri.parse(login.url + "booking_details/stat/");
+    Response resp1 = await post(url, body: {'hhh': login.uid});
     // data = jsonDecode(resp1.body);
     this.setState(() {
       data = jsonDecode(resp1.body);
@@ -25,11 +28,13 @@ class _ViewstatusState extends State<Viewstatus> {
   Widget build(BuildContext context) {
     List_function();
     return Scaffold(
+      drawer: patientdraw(),
+      bottomNavigationBar: bottomnav_ptn(),
       // drawer: drawuser(),
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          "View Product",
+          "View Booking Status",
           style: new TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),

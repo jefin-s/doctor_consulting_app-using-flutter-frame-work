@@ -1,3 +1,7 @@
+import 'package:doctor_consulting_app/layout/Login.dart';
+import 'package:doctor_consulting_app/layout/bottomnav.dart';
+import 'package:doctor_consulting_app/layout/pateint_raw.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
@@ -12,8 +16,8 @@ class Viewpmr extends StatefulWidget {
 class _ViewpmrState extends State<Viewpmr> {
   late List data;
   void List_function() async {
-    var url = Uri.parse("http://192.168.43.90:8000/pmr/ooo/");
-    Response resp1 = await get(url);
+    var url = Uri.parse(login.url + "/pmr/ooo/");
+    Response resp1 = await post(url, body: {'kk': login.uid});
     // data = jsonDecode(resp1.body);
     this.setState(() {
       data = jsonDecode(resp1.body);
@@ -25,11 +29,13 @@ class _ViewpmrState extends State<Viewpmr> {
   Widget build(BuildContext context) {
     List_function();
     return Scaffold(
+      drawer: patientdraw(),
+      bottomNavigationBar: bottomnav_ptn(),
       // drawer: drawuser(),
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          "View Product",
+          "View PMR",
           style: new TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
@@ -63,26 +69,26 @@ class _ViewpmrState extends State<Viewpmr> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               // Image.network(mainpage.url+"static/"+data[index]['pmr'].toString()),
-                              new Text(
-                                "PMR details: " +
-                                    " " +
-                                    data[index]['pmr_details'].toString(),
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              new SizedBox(height: 6.0),
+                              // new Text(
+                              //   "PMR details: " +
+                              //       " " +
+                              //       data[index]['pmr_details'].toString(),
+                              //   style: Theme.of(context).textTheme.titleMedium,
+                              // ),
+                              // new SizedBox(height: 6.0),
 
-                              new Text(
-                                "Doctor name : " +
-                                    " " +
-                                    data[index]['doctor_id'].toString(),
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              new SizedBox(height: 6.0),
+                              // new Text(
+                              //   "Doctor name : " +
+                              //       " " +
+                              //       data[index]['doctor_id'].toString(),
+                              //   style: Theme.of(context).textTheme.titleMedium,
+                              // ),
+                              // new SizedBox(height: 6.0),
 
                               new Text(
                                 "Patient id" +
                                     " " +
-                                    data[index]['patient_id'].toString(),
+                                    data[index]['patient'].toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               new SizedBox(height: 6.0),
@@ -98,7 +104,7 @@ class _ViewpmrState extends State<Viewpmr> {
                               new Text(
                                 "prescrptions : " +
                                     " " +
-                                    data[index]['prescriptions'].toString(),
+                                    data[index]['prescription'].toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               new SizedBox(height: 6.0),

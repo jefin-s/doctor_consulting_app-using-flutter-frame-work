@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:doctor_consulting_app/layout/Login.dart';
+import 'package:doctor_consulting_app/layout/bottomnav.dart';
+import 'package:doctor_consulting_app/layout/pateint_raw.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -9,6 +14,22 @@ class Bookslot extends StatefulWidget {
 }
 
 class _BookslotState extends State<Bookslot> {
+  List dropList = [
+    {"doctor_id": 0, " doctor_name ": "<Select>"},
+  ];
+  var fkey = GlobalKey<FormState>();
+  var val = true;
+  var dropdownvalue = "";
+
+  void viewDoctor_name() async {
+    var url = Uri.parse(login.url + "doctor/view_doc/");
+    var resp = await get(url);
+    print(resp.body);
+    setState(() {
+      dropList = jsonDecode(resp.body);
+    });
+  }
+
   late TextEditingController time, date;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
@@ -50,16 +71,21 @@ class _BookslotState extends State<Bookslot> {
   }
 
   void postdata() async {
-    var url = Uri.parse("http://192.168.43.90:800/booking_details/book/");
+    var url = Uri.parse(login.url + "booking_details/book/");
     Response resp = await post(url, body: {
       'booking_date': date.text.toString(),
       'booking_time': time.text.toString(),
+      'did': dropdownvalue,
+      'kkk': login.uid
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    viewDoctor_name();
     return Scaffold(
+      drawer: patientdraw(),
+      bottomNavigationBar: bottomnav_ptn(),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 89, 64, 255),
         title: const Text("Book Your Slot"),
@@ -89,6 +115,28 @@ class _BookslotState extends State<Bookslot> {
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                  width: 350.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black)),
+                  child: DropdownButtonFormField(
+                    hint: Text("<--Select the Doctor-->"),
+                    onChanged: (newValue) {
+                      setState(() {
+                        dropdownvalue = newValue.toString();
+                        print(dropdownvalue);
+                      });
+                    },
+                    items: dropList
+                        .map((item) => DropdownMenuItem(
+                              child: Text(item['doctor_name'].toString()),
+                              value: item['doctor_id'].toString(),
+                            ))
+                        .toList(),
+                  ),
+                ),
+                Container(
                   padding: EdgeInsets.fromLTRB(90, 10, 90, 10),
                   child: TextFormField(
                     showCursor: true,
@@ -114,6 +162,8 @@ class _BookslotState extends State<Bookslot> {
                         backgroundColor: Color.fromARGB(255, 14, 123, 137)),
                     onPressed: () {
                       postdata();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext) => Bookslot()));
                     },
                     child: Text("submit"),
                   ),

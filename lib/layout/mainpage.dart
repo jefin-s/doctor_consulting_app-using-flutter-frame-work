@@ -1,6 +1,8 @@
 import 'package:doctor_consulting_app/layout/bottomnav.dart';
+import 'package:doctor_consulting_app/layout/chatbot.dart';
 import 'package:doctor_consulting_app/layout/pateint_raw.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class mainpage extends StatefulWidget {
   const mainpage({Key? key}) : super(key: key);
@@ -20,19 +22,45 @@ class _mainpageState extends State<mainpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 32, 26, 48),
-        // automaticallyImplyLeading: false,
-        title: const Text('Main Page'),
-      ),
-      drawer: patientdraw(),
-      bottomNavigationBar: bottomnav_ptn(),
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('assets/ss.jpg'),
-          fit: BoxFit.cover,
-        )),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 19, 93, 172),
+          // automaticallyImplyLeading: false,
+          title: const Text('CARE 360'),
+          titleTextStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2),
+        ),
+        drawer: patientdraw(),
+        bottomNavigationBar: bottomnav_ptn(),
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/images/—Pngtree—health services in mobile application_5345140.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: FloatingActionButton(
+                  backgroundColor: Colors.blueAccent,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatScreen()),
+                    );
+                  },
+                  child: Icon(Icons.chat_bubble_outline),
+                ),
+              ),
+            ),
+          ],
+        )
 
         // child: Padding(
         //   padding: const EdgeInsets.all(8.0),
@@ -62,7 +90,6 @@ class _mainpageState extends State<mainpage> {
         //     ),
         //   ),
         // ),
-      ),
-    );
+        );
   }
 }
